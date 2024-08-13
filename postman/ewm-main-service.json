@@ -14379,7 +14379,7 @@
 					"    }",
 					"",
 					"    async acceptParticipationRequest(eventId, userId, reqId, verbose=null) {",
-					"        return this.patch('/users/' + userId + '/events/' + eventId + '/requests/', {requestIds:[reqId], status: \"CONFIRMED\"}, \"Ошибка при принятии заявки на участие в событии\", verbose);",
+					"        return this.patch('/users/' + userId + '/events/' + eventId + '/requests', {requestIds:[reqId], status: \"CONFIRMED\"}, \"Ошибка при принятии заявки на участие в событии\", verbose);",
 					"    }",
 					"",
 					"    async findCategory(catId, verbose=null) {",
