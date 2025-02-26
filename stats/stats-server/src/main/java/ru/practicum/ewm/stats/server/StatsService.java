@@ -1,6 +1,7 @@
 package ru.practicum.ewm.stats.server;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import ru.practicum.ewm.stats.server.model.EndpointHitMapper;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -19,24 +21,34 @@ public class StatsService {
     private final StatsRepository statsRepository;
 
     public void saveHit(EndpointHitDto hit) {
+        log.info("Saving hit %s", hit);
         statsRepository.save(EndpointHitMapper.toHit(hit));
     }
 
     @Transactional(readOnly = true)
     public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+        log.info("Getting statistics (start: %s; end: %s; uris: %s; unique: %b", start, end, uris, unique);
         if (start.isAfter(end)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong timestamp.");
         }
+        List<ViewStats> result;
         if (unique) {
             if (uris != null) {
-                return statsRepository.findHitsWithUniqueIpWithUris(uris, start, end);
+                result = statsRepository.findHitsWithUniqueIpWithUris(uris, start, end);
+                log.info("Response: %s", result);
+                return result;
             }
-            return statsRepository.findHitsWithUniqueIpWithoutUris(start, end);
-        } else {
-            if (uris != null) {
-                return statsRepository.findAllHitsWithUris(uris, start, end);
-            }
-            return statsRepository.findAllHitsWithoutUris(start, end);
+            result = statsRepository.findHitsWithUniqueIpWithoutUris(start, end);
+            log.info("Response: %s", result);
+            return result;
         }
+        if (uris != null) {
+            result = statsRepository.findAllHitsWithUris(uris, start, end);
+            log.info("Response: %s", result);
+            return result;
+        }
+        result = statsRepository.findAllHitsWithoutUris(start, end);
+        log.info("Response: %s", result);
+        return result;
     }
 }

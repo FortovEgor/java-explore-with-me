@@ -28,6 +28,4 @@ public class StatsController {
                                     @RequestParam(defaultValue = "false") Boolean unique) {
         return statsService.getStats(start, end, uris, unique);
     }
-
-
 }
