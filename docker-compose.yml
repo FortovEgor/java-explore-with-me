@@ -34,7 +34,7 @@ services:
       retries: 10
 
   ewm-service:
-    build: ./main-service
+    build: ./main
     container_name: ewm-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://ewm-db/ewm_server
