@@ -1,3 +1,4 @@
+version: 'latest'  # Убедитесь, что версия совместима с вашей версией Docker
 services:
   stats-server:
     build: ./stats/stats-server
@@ -12,7 +13,7 @@ services:
       interval: 5s
       retries: 10
       start_period: 40s
-      start_interval: 5s
+#      start_interval: 5s
     ports:
       - "9090:9090"
     depends_on:
@@ -46,7 +47,7 @@ services:
       interval: 5s
       retries: 10
       start_period: 40s
-      start_interval: 5s
+#      start_interval: 5s
     ports:
       - "8080:8080"
     depends_on:
