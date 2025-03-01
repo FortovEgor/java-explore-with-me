@@ -1,18 +1,19 @@
-package ru.practicum.ewm.stats.server.model;
-
-import lombok.*;
+package ru.practicum.hit;
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "hits")
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-public class EndpointHit {
-
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "hits")
+public class Hit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,9 +24,9 @@ public class EndpointHit {
     @Column(nullable = false)
     private String uri;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false)
     private String ip;
 
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime timestamp;
 }
