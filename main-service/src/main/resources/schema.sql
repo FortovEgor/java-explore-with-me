@@ -151,3 +151,5 @@ CREATE TABLE compilations_events (
                 ON DELETE CASCADE
 );
 COMMENT ON TABLE compilations_events IS 'Ассоциативная таблица событий и подборок событий';
+
+-- TODO: create indexes according to database analytics
