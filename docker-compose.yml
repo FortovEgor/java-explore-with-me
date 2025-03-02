@@ -35,7 +35,7 @@ services:
       retries: 10
     restart: on-failure
 
-  main-service:
+  ewm-service:
     build: ./main-service
     container_name: main-service
     environment:
@@ -57,7 +57,7 @@ services:
       - stats-server
     restart: on-failure
 
-  main-db:  # main db
+  ewm-db:  # main db
     image: postgres:16.1
     container_name: main-db
     ports:
