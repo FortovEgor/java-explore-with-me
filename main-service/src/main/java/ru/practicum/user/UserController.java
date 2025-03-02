@@ -21,24 +21,23 @@ public class UserController {
     private final UserMapper mapper;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody NewUserRequest request) {
+    public UserDto createUser(@Valid @RequestBody NewUserRequest request) {
         User user = service.createUser(request);
-        return new ResponseEntity<>(mapper.toDto(user), HttpStatus.CREATED);
+        return mapper.toDto(user);
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getUsers(@RequestParam(required = false) List<Long> ids,
+    public List<UserDto> getUsers(@RequestParam(required = false) List<Long> ids,
                                                   @RequestParam(defaultValue = "0") Long from,
                                                   @RequestParam(defaultValue = "10") Long size) {
 
         List<User> users = service.getUsers(ids, from, size);
 
-        return new ResponseEntity<>(mapper.toDto(users), HttpStatus.OK);
+        return mapper.toDto(users);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable Long userId) {
+    public Void deleteUserById(@PathVariable Long userId) {
         service.deleteUserById(userId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
