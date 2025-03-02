@@ -53,7 +53,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - ewm
+      - ewm-db
       - stats-server
     restart: on-failure
 
