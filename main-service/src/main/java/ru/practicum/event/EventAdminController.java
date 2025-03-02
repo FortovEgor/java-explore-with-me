@@ -20,7 +20,7 @@ public class EventAdminController {
     private final EventMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<EventFullDto>> findEvents(@RequestParam(required = false) List<Long> users,
+    public List<EventFullDto> findEvents(@RequestParam(required = false) List<Long> users,
                                                          @RequestParam(required = false) List<String> states,
                                                          @RequestParam(required = false) List<Long> categories,
                                                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
@@ -29,7 +29,7 @@ public class EventAdminController {
                                                          @RequestParam(defaultValue = "10") Long size) {
 
         List<Event> events = service.findEvents(users, states, categories, rangeStart, rangeEnd, from, size);
-        return new ResponseEntity<>(mapper.toFullDto(events), HttpStatus.OK);
+        return mapper.toFullDto(events);
     }
 
     @PatchMapping("/{eventId}")
