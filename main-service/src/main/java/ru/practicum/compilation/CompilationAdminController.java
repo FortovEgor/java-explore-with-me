@@ -20,17 +20,18 @@ public class CompilationAdminController {
     private final CompilationMapper mapper;
 
     @PostMapping
-    public ResponseEntity<CompilationDto> createCompilation(@Valid @RequestBody NewCompilationDto dto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public CompilationDto createCompilation(@Valid @RequestBody NewCompilationDto dto) {
         Compilation compilation = service.createCompilation(dto);
-        return new ResponseEntity<>(mapper.toDto(compilation), HttpStatus.CREATED);
+        return mapper.toDto(compilation);
     }
 
     @PatchMapping("/{compId}")
-    public ResponseEntity<CompilationDto> updateCompilation(@PathVariable Long compId,
+    public CompilationDto updateCompilation(@PathVariable Long compId,
                                                             @Valid @RequestBody UpdateCompilationRequest dto) {
 
         Compilation compilation = service.updateCompilation(compId, dto);
-        return new ResponseEntity<>(mapper.toDto(compilation), HttpStatus.OK);
+        return mapper.toDto(compilation);
     }
 
     @DeleteMapping("/{compId}")

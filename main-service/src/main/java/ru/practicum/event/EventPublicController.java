@@ -2,8 +2,6 @@ package ru.practicum.event;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.event.dto.EventFullDto;
 import ru.practicum.event.dto.EventSearchSort;
@@ -21,7 +19,7 @@ public class EventPublicController {
     private final EventMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<EventShortDto>> searchEvents(@RequestParam(required = false) String text,
+    public List<EventShortDto> searchEvents(@RequestParam(required = false) String text,
                                             @RequestParam(required = false) List<Long> categories,
                                             @RequestParam(required = false) Boolean paid,
                                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
@@ -32,13 +30,13 @@ public class EventPublicController {
                                             @RequestParam(defaultValue = "10") long size) {
 
         List<Event> events = service.searchEvents(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
-        return new ResponseEntity<>(mapper.toShortDto(events), HttpStatus.OK);
+        return mapper.toShortDto(events);
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<EventFullDto> getEvent(@PathVariable Long eventId) {
+    public EventFullDto getEvent(@PathVariable Long eventId) {
 
         Event event = service.getPublishedEventById(eventId);
-        return new ResponseEntity<>(mapper.toFullDto(event), HttpStatus.OK);
+        return mapper.toFullDto(event);
     }
 }

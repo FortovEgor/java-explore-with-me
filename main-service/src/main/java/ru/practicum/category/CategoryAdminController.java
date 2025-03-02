@@ -18,9 +18,10 @@ public class CategoryAdminController {
     private final CategoryMapper mapper;
 
     @PostMapping
-    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody NewCategoryDto newCategory) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public CategoryDto createCategory(@Valid @RequestBody NewCategoryDto newCategory) {
         Category category = service.createCategory(newCategory);
-        return new ResponseEntity<>(mapper.toDto(category), HttpStatus.CREATED);
+        return mapper.toDto(category);
     }
 
     @DeleteMapping("/{catId}")
@@ -30,10 +31,10 @@ public class CategoryAdminController {
     }
 
     @PatchMapping("/{catId}")
-    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long catId,
+    public CategoryDto updateCategory(@PathVariable Long catId,
                                                       @Valid @RequestBody UpdatedCategoryDto dto) {
 
         Category category = service.updateCategory(catId, dto);
-        return new ResponseEntity<>(mapper.toDto(category), HttpStatus.OK);
+        return mapper.toDto(category);
     }
 }
