@@ -27,13 +27,13 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getUsers(@RequestParam(required = false) List<Long> ids,
+    public List<UserDto> getUsers(@RequestParam(required = false) List<Long> ids,
                                                   @RequestParam(defaultValue = "0") Long from,
                                                   @RequestParam(defaultValue = "10") Long size) {
 
         List<User> users = service.getUsers(ids, from, size);
 
-        return new ResponseEntity<>(mapper.toDto(users), HttpStatus.OK);
+        return mapper.toDto(users);
     }
 
     @DeleteMapping("/{userId}")
