@@ -3,8 +3,6 @@ package ru.practicum.event;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.event.dto.EventFullDto;
 import ru.practicum.event.dto.UpdateEventAdminRequest;
@@ -33,10 +31,10 @@ public class EventAdminController {
     }
 
     @PatchMapping("/{eventId}")
-    public ResponseEntity<EventFullDto> updateEvent(@PathVariable Long eventId,
+    public EventFullDto updateEvent(@PathVariable Long eventId,
                                                     @Valid @RequestBody UpdateEventAdminRequest request) {
 
         Event event = service.updateEventByAdmin(eventId, request);
-        return new ResponseEntity<>(mapper.toFullDto(event), HttpStatus.OK);
+        return mapper.toFullDto(event);
     }
 }
