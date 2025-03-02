@@ -17,24 +17,25 @@ public class ParticipationController {
     private final ParticipationMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ParticipationRequestDto> createParticipation(@PathVariable Long userId,
+    @ResponseStatus(HttpStatus.CREATED)
+    public ParticipationRequestDto createParticipation(@PathVariable Long userId,
                                                                        @RequestParam Long eventId) {
 
         Participation participation = service.createParticipation(userId, eventId);
-        return new ResponseEntity<>(mapper.toDto(participation), HttpStatus.CREATED);
+        return mapper.toDto(participation);
     }
 
     @GetMapping
-    public ResponseEntity<List<ParticipationRequestDto>> getUserParticipations(@PathVariable Long userId) {
+    public List<ParticipationRequestDto> getUserParticipations(@PathVariable Long userId) {
         List<Participation> participations = service.getUserParticipations(userId);
-        return new ResponseEntity<>(mapper.toDto(participations), HttpStatus.OK);
+        return mapper.toDto(participations);
     }
 
     @PatchMapping("/{requestId}/cancel")
-    public ResponseEntity<ParticipationRequestDto> cancelParticipation(@PathVariable Long userId,
+    public ParticipationRequestDto cancelParticipation(@PathVariable Long userId,
                                                                        @PathVariable Long requestId) {
 
         Participation participation = service.cancelParticipation(userId, requestId);
-        return new ResponseEntity<>(mapper.toDto(participation), HttpStatus.OK);
+        return mapper.toDto(participation);
     }
 }
