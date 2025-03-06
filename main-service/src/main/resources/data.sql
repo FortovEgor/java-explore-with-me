@@ -92,5 +92,3 @@ INSERT INTO compilations_events (compilation_id, events_id) VALUES
 (3, 2),  -- Компиляция 3 связана с событием 2
 (4, 3),  -- Компиляция 4 связана с событием 3
 (1, 3);  -- Компиляция 1 также связана с событием 3
-
--- UPDATE events SET state = 'PUBLISHED' WHERE id = 1;

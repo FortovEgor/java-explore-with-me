@@ -43,7 +43,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/comments/1",
+					"raw": "http://localhost:8080/users/1/comments/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -53,7 +53,60 @@
 						"users",
 						"1",
 						"comments",
-						"1"
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание комментария One More",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"comment1 text\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/1/comments/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"1",
+						"comments",
+						"2"
 					]
 				}
 			},
@@ -88,7 +141,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"text\": \"comment1 text\"\n}",
+					"raw": "{\n    \"text\": \"comment1 text another\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -96,7 +149,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/comments/1",
+					"raw": "http://localhost:8080/users/1/comments/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -106,7 +159,7 @@
 						"users",
 						"1",
 						"comments",
-						"1"
+						"2"
 					]
 				}
 			},
@@ -119,8 +172,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Ответ должен содержать код статуса 400 и данные в формате json\", function () {",
+							"    pm.response.to.have.status(400);  ",
 							"    pm.response.to.be.withBody;",
 							"    pm.response.to.be.json;",
 							"});"
@@ -141,7 +194,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"text\": \"comment1 text\"\n}",
+					"raw": "{\n    \"text\": \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -172,8 +225,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {",
+							"    pm.response.to.have.status(404);  ",
 							"    pm.response.to.be.withBody;",
 							"    pm.response.to.be.json;",
 							"});"
@@ -194,7 +247,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"text\": \"comment1 text\"\n}",
+					"raw": "{\n    \"text\": \"some comment from noname\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -202,7 +255,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/comments/1",
+					"raw": "http://localhost:8080/users/10001/comments/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -210,7 +263,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"1",
+						"10001",
 						"comments",
 						"1"
 					]
@@ -225,8 +278,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Ответ должен содержать код статуса 201 и данные в формате json\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {",
+							"    pm.response.to.have.status(404);",
 							"    pm.response.to.be.withBody;",
 							"    pm.response.to.be.json;",
 							"});"
@@ -247,7 +300,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"text\": \"comment1 text\"\n}",
+					"raw": "{\n    \"text\": \"some comment for non-existing event\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -255,7 +308,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/comments/1",
+					"raw": "http://localhost:8080/users/1/comments/10001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -265,7 +318,7 @@
 						"users",
 						"1",
 						"comments",
-						"1"
+						"10001"
 					]
 				}
 			},
@@ -361,7 +414,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/comments/1/1",
+					"raw": "http://localhost:8080/users/1/comments/2/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -371,7 +424,7 @@
 						"users",
 						"1",
 						"comments",
-						"1",
+						"2",
 						"1"
 					]
 				}
@@ -763,8 +816,6 @@
 						"exec": [
 							"pm.test(\"Ответ должен содержать код статуса 204 и данные в формате json\", function () {",
 							"    pm.response.to.have.status(204);",
-							"    pm.response.to.be.withBody;",
-							"    pm.response.to.be.json;",
 							"});"
 						],
 						"type": "text/javascript",
@@ -791,7 +842,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/admin/comments/2",
+					"raw": "http://localhost:8080/admin/comments/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -800,7 +851,7 @@
 					"path": [
 						"admin",
 						"comments",
-						"2"
+						"3"
 					]
 				}
 			},
