@@ -96,7 +96,7 @@ public class CommentService {
                 new NotFoundException("User with id =" + userId + " not found"));
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
                 new NotFoundException("Comment with id = " + commentId + "  not found"));
-        if (comment.getAuthor().getId() != author.getId()) {
+        if (!Objects.equals(comment.getAuthor().getId(), author.getId())) {
             throw new IncorrectInputDataException("Only author can delete his/her comment");
         }
 
