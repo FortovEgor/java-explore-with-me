@@ -1,0 +1,24 @@
+package ru.practicum.hit;
+
+import jakarta.validation.constraints.NotNull;
+
+import lombok.*;
+
+@Data
+@Builder
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
+public class CreateHitRequest {
+    @NotNull
+    private String app;
+
+    @NotNull
+    private String uri;
+
+    @NotNull
+    private String ip;
+
+    @NotNull
+    private String timestamp;
+}
