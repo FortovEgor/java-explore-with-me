@@ -13,6 +13,8 @@ import ru.practicum.exception.IncorrectInputDataException;
 import ru.practicum.exception.NotFoundException;
 import ru.practicum.user.User;
 import ru.practicum.user.UserRepository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import static ru.practicum.event.model.EventState.PUBLISHED;
@@ -45,6 +47,7 @@ public class CommentService {
         Comment comment = mapper.toComment(request);
         comment.setAuthor(author);
         comment.setEvent(event);
+        comment.setCreated(LocalDateTime.now());
 
         log.info("saving comment {} to DB", comment);
         return commentRepository.save(comment);
