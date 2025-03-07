@@ -25,7 +25,7 @@ public class CommentPrivateController {
     public CommentDto addComment(@PathVariable Long userId,
                                  @PathVariable Long eventId,
                                  @Valid @RequestBody CreateCommentRequest request) {
-        Comment savedComment = commentService.addComment(userId, eventId, request);
+        Comment savedComment = commentService.addComment(userId, eventId, request.getText());
         return mapper.toDto(savedComment);
     }
 
@@ -34,7 +34,7 @@ public class CommentPrivateController {
                                     @PathVariable Long eventId,
                                     @PathVariable Long commentId,
                                     @Valid @RequestBody UpdateCommentRequest request) {
-        Comment updatedComment = commentService.updateComment(userId, eventId, commentId, request);
+        Comment updatedComment = commentService.updateComment(userId, eventId, commentId, request.getText());
         return mapper.toDto(updatedComment);
     }
 

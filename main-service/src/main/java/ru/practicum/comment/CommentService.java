@@ -28,11 +28,10 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-    private final CommentMapper mapper;
 
     @Transactional
-    public Comment addComment(Long userId, Long eventId, CreateCommentRequest request) {
-        log.info("adding comment for user with id = {}, eventId = {}, comment = {}", userId, eventId, request);
+    public Comment addComment(Long userId, Long eventId, String commentText) {
+        log.info("adding comment for user with id = {}, eventId = {}, commentText = {}", userId, eventId, commentText);
 
         User author = userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundException("User with id =" + userId + " not found"));
@@ -44,19 +43,21 @@ public class CommentService {
             throw new IncorrectInputDataException("Comments are available only for published events.");
         }
 
-        Comment comment = mapper.toComment(request);
-        comment.setAuthor(author);
-        comment.setEvent(event);
-        comment.setCreated(LocalDateTime.now());
+        Comment comment = Comment.builder()
+                        .text(commentText)
+                        .author(author)
+                        .event(event)
+                        .created(LocalDateTime.now())
+                        .build();
 
         log.info("saving comment {} to DB", comment);
         return commentRepository.save(comment);
     }
 
     @Transactional
-    public Comment updateComment(Long userId, Long eventId, Long commentId, UpdateCommentRequest request) {
-        log.info("updating comment(userId = {}, eventId = {}, commentId = {}, commentData = {}",
-                userId, eventId, commentId, request);
+    public Comment updateComment(Long userId, Long eventId, Long commentId, String newCommentText) {
+        log.info("updating comment(userId = {}, eventId = {}, commentId = {}, new comment text = {}",
+                userId, eventId, commentId, newCommentText);
 
         User author = userRepository.findById(userId).orElseThrow(() ->
                 new NotFoundException("User with id =" + userId + " not found"));
@@ -72,7 +73,7 @@ public class CommentService {
         if (!Objects.equals(comment.getEvent().getId(), event.getId())) {
             throw new IncorrectInputDataException("Current comment is for the other event");
         }
-        comment.setText(request.getText());
+        comment.setText(newCommentText);
 
         log.info("saving comment {} to DB", comment);
         return commentRepository.save(comment);
