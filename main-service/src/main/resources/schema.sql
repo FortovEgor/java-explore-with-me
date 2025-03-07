@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS events CASCADE;
 DROP TABLE IF EXISTS participations CASCADE;
 DROP TABLE IF EXISTS compilations CASCADE;
 DROP TABLE IF EXISTS compilations_events CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
 
 CREATE TABLE categories (
     id BIGSERIAL PRIMARY KEY,
@@ -72,5 +73,17 @@ CREATE TABLE compilations_events (
     CONSTRAINT compilation_fk FOREIGN KEY(compilation_id) REFERENCES compilations(id) ON DELETE CASCADE,
     CONSTRAINT events_event_fk FOREIGN KEY(events_id) REFERENCES events(id) ON DELETE CASCADE
 );
+
+CREATE TABLE comments (
+     id BIGSERIAL PRIMARY KEY,
+     text VARCHAR(2000) NOT NULL,
+     author_id BIGINT NOT NULL,
+     event_id BIGINT NOT NULL,
+     created TIMESTAMP NOT NULL,
+     edited TIMESTAMP,  -- if null, then comment was not edited
+
+     CONSTRAINT comments_author_fk FOREIGN KEY(author_id) REFERENCES users(id) ON DELETE CASCADE,
+     CONSTRAINT comments_event_fk FOREIGN KEY(event_id) REFERENCES events(id) ON DELETE CASCADE
+ );
 
 -- TODO: create indexes according to database analytics
